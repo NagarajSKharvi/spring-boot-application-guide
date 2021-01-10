@@ -1,0 +1,166 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2513
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fnil\fcharset0 Menlo-Regular;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;\red0\green0\blue0;\red0\green0\blue0;
+\red0\green0\blue0;\red0\green0\blue0;\red0\green0\blue0;}
+{\*\expandedcolortbl;;\cssrgb\c0\c1\c1;\cssrgb\c0\c0\c0;\cssrgb\c0\c1\c1;
+\cssrgb\c0\c1\c1;\cssrgb\c0\c1\c1;\cssrgb\c0\c1\c1;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww28600\viewh16580\viewkind0
+\deftab720
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs48 \cf2 Dependency Injection and Spring Annotations
+\fs22 \cf2 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec3 \
+\cf2 \outl0\strokewidth0 \
+\pard\pardeftab720\partightenfactor0
+
+\fs28 \cf2 \outl0\strokewidth0 \strokec3 The Spring IoC Container
+\fs22 \
+\pard\pardeftab720\partightenfactor0
+\cf2 IoC container is represented by the interface ApplicationContext. The Spring container is responsible for instantiating, configuring and assembling objects known as beans, as well as managing their lifecycle.\
+\
+Dependency Injection (DI) is a design pattern that removes the dependency from the programming code so that it can be easy to manage, develop and test the application. Dependency Injection makes our programming code loosely coupled\
+\pard\pardeftab720\partightenfactor0
+\cf4 \outl0\strokewidth0 \
+
+\fs28 Tight Coupling
+\fs22 \cf2 \outl0\strokewidth0 \
+\pard\pardeftab720\partightenfactor0
+\cf2 Example: Assume that you have a task to finish for time being consider it is conducting online class. For this task you depending on android phone So you write a code to perform a online class using android phone. This works well but in future if you upgrade to IPhone your code doesn\'92t work (need to modify lot of stuffs) because its not android phone this concept is called as tight coupling.\
+\
+\pard\pardeftab720\partightenfactor0
+
+\fs28 \cf4 \outl0\strokewidth0 Loose Coupling
+\fs22 \cf2 \outl0\strokewidth0 \
+\pard\pardeftab720\partightenfactor0
+\cf2 Now you write a code for \cf4 \outl0\strokewidth0 conducting online class using a smartphone, you can give either android phone or iPhone to finish your task this concept is called as loose coupling\cf2 \outl0\strokewidth0 \
+\
+\pard\pardeftab720\partightenfactor0
+\cf4 \outl0\strokewidth0 Code for Tight Coupling:\
+\
+\pard\pardeftab720\partightenfactor0
+\cf4 \kerning1\expnd0\expndtw0 public class IPhone\
+\
+	public String display() \{\
+		return "IPhone is best";\
+	\}\
+\
+\}\
+\
+public class Main \{\
+\
+	public static void main(String[] args) \{\
+		\
+		IPhone iphone = new IPhone();\
+		System.out.println(iphone.display());\
+	\}\
+\}\
+\pard\pardeftab720\partightenfactor0
+\cf2 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec3 \
+\pard\pardeftab720\partightenfactor0
+
+\fs28 \cf2 Code for Loose Coupling:
+\fs22 \
+\pard\pardeftab720\partightenfactor0
+\cf5 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 public interface Smartphone \{\
+	\
+	String display();\
+\}\
+\
+public class Android implements Smartphone \{\
+\
+	@Override\
+	public String display() \{\
+		return "Android is best";\
+	\}\
+\}\
+\
+public class IPhone implements Smartphone \{\
+\
+	@Override\
+	public String display() \{\
+		return "IPhone is best";\
+	\}\
+\}\
+@Getter @Setter\
+@ToString\
+@NoArgsConstructor\
+public class OnlineClass \{\
+	\
+	private Smartphone smartphone;\
+\
+	public OnlineClass(Smartphone smartphone) \{\
+		super();\
+		this.smartphone = smartphone;\
+	\}\
+\}\cf2 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec3 \
+\
+\pard\pardeftab720\partightenfactor0
+\cf5 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 public class Main \{\
+\
+	public static void main(String[] args) \{\
+				\
+		OnlineClass oc = new OnlineClass(new IPhone()); \
+		System.out.println(oc.getSmartphone().display());\
+	\}\
+\}\
+\pard\pardeftab720\partightenfactor0
+\cf5 \expnd0\expndtw0\kerning0
+\
+\
+
+\fs28 Spring Annotations
+\fs22 \
+\pard\pardeftab720\partightenfactor0
+\cf6 Annotation makes your class managed by the spring.\cf5 \
+Controller, Rest\cf6 Controller [Handling request from a browser], \
+Component [Generic annotation], \
+Service [Write Business Logic], \
+Repository [Persist the data to DB],\
+Configuration [Provide configuration to your application]\
+Autowired [This annotation asks spring to give those dependency to whichever the class it is requesting for]\
+\
+\pard\pardeftab720\partightenfactor0
+
+\fs28 \cf6 \kerning1\expnd0\expndtw0 SpringBootApplication
+\fs22  [Makes your simple application to Spring Boot Application and lots of configuration like below]\cf6 \expnd0\expndtw0\kerning0
+\
+\cf6 \kerning1\expnd0\expndtw0 @Target(ElementType.TYPE)\
+@Retention(RetentionPolicy.RUNTIME)\
+@Documented\
+@Inherited\
+@SpringBootConfiguration\
+@EnableAutoConfiguration\
+@ComponentScan\
+\
+\pard\pardeftab720\partightenfactor0
+\cf7 ComponentScan [Scans all the packages & sub packages where your SpringBootApplication annotation is declared]\cf6 \expnd0\expndtw0\kerning0
+\
+Spring application by default scans only those classes which are resides under the package where your \cf7 \kerning1\expnd0\expndtw0 SpringBootApplication  \cf6 \expnd0\expndtw0\kerning0
+annotation is declared.\
+\
+For Ex:\
+\
+package com.example.demo;\
+\
+import org.springframework.boot.SpringApplication;\
+import org.springframework.boot.autoconfigure.SpringBootApplication;\
+\
+@SpringBootApplication\
+public class Application \{\
+\
+	public static void main(String[] args) \{\
+		SpringApplication.run(Application.class, args);\
+	\}\
+\
+\}\
+\
+Here only \cf7 annotated \cf6 classes which resides under the package and sub package \cf7 com.example.demo are scanned by the spring application. Other annotated classes are skipped by spring container.\
+Suppose we have a class Example which is resides under the package com.example.try is skipped by spring application.\
+If you want to include those external packages then you can mention those package name in component scan something like this\
+\kerning1\expnd0\expndtw0 @ComponentScan(\'93\expnd0\expndtw0\kerning0
+com.example\kerning1\expnd0\expndtw0 \'94)\
+\
+Now annotated Example class will be scanned and managed by the Spring IOC Container.}

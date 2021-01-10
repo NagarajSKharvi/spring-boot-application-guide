@@ -1,0 +1,152 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2513
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fnil\fcharset0 Menlo-Regular;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;\red0\green0\blue0;\red0\green0\blue0;
+\red0\green0\blue0;}
+{\*\expandedcolortbl;;\cssrgb\c0\c1\c1;\cssrgb\c0\c0\c0;\cssrgb\c0\c1\c1;
+\cssrgb\c0\c1\c1;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww28600\viewh16580\viewkind0
+\deftab720
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs48 \cf2 Building ToDo app nav bar and jsp fragments
+\fs22 \cf2 \
+
+\fs28 \cf2 Adding navigation bar to application
+\fs22 \cf2 \
+\
+After <body> in \cf2 todo.jsp \cf2 add the following code. If it doesn\'92t work try with a lower version\
+\pard\pardeftab720\partightenfactor0
+\cf2 <nav role="navigation" class="navbar navbar-default">\
+	<div class="">\
+		<a href="http://www.in28minutes.com" class="navbar-brand">\cf2 \ul \ulc2 Todo\cf2 \ulnone  \cf2 \ul \ulc2 App\cf2 \ulnone </a>\
+	</div>\
+	<div class="navbar-collapse">\
+		<ul class="nav navbar-nav">\
+			<li class="active"><a href="/login">Home</a></li>\
+			<li><a href="/list-todos">\cf2 \ul \ulc2 Todos\cf2 \ulnone </a></li>\
+		</ul>\
+	</div>\
+</nav>\
+\
+Instead of adding this in all other pages we can make it generic in all pages. Its called as JSP Fragments. Lets do it\
+Create a new folder common and have header.jspf, footer.jspf and navigation.jspf file created.\
+\pard\pardeftab720\partightenfactor0
+\cf2 Now put this below code to header.jspf\
+\pard\pardeftab720\partightenfactor0
+\cf2 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>\
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>\
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>\
+<html>\
+	<head>\
+		<title>First web application</title>\
+		<link href="webjars/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">\
+	</head>\
+	\
+	<body>\
+\
+Now put this below code to footer.jspf\
+\pard\pardeftab720\partightenfactor0
+\cf4 	<script src="webjars/jquery/3.5.1/jquery.min.js"></script>\
+		<script src="webjars/bootstrap/3.4.1/js/bootstrap.min.js"></script>\
+		<script src="webjars/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.js"></script>\
+		\
+		<script>\
+			$('#targetDate').datepicker(\{\
+				format : 'dd/mm/yyyy'\
+			\});\
+		</script>\
+	</body>\
+</html>\
+\
+\pard\pardeftab720\partightenfactor0
+\cf4 Now put this below code to navigation.jspf\
+\pard\pardeftab720\partightenfactor0
+\cf4 <nav role="navigation" class="navbar navbar-default">\
+	<div class="">\
+		<a href="http://www.in28minutes.com" class="navbar-brand">\cf4 \ul \ulc4 Todo\cf4 \ulnone  \cf4 \ul \ulc4 App\cf4 \ulnone </a>\
+	</div>\
+	<div class="navbar-collapse">\
+		<ul class="nav navbar-nav">\
+			<li class="active"><a href="/login">Home</a></li>\
+			<li><a href="/list-todos">\cf4 \ul \ulc4 Todos\cf4 \ulnone </a></li>\
+		</ul>\
+	</div>\
+</nav>\
+\
+Remove these code from todo.jsp and add a link to common files\
+todo.jsp\
+\cf5 <%@ include file = "common/header.jspf"%>\
+<%@ include file = "common/navigation.jspf"%>\
+<div class = "container">\
+	Add \cf5 \ul \ulc5 Todo\cf5 \ulnone  page for $\{name\}\
+	\
+	<form:form method="post" modelAttribute="todo">\
+		<fieldset class = "form-group">\
+			<form:label path = "desc">Description</form:label>\
+			<form:input path = "desc" type = "text" class = "form-control" required="required"/>\
+			<form:errors path = "desc" cssClass = "text-warning"/>\
+		</fieldset>\
+		<fieldset class = "form-group">\
+			<form:label path = "targetDate">Target Date</form:label>\
+			<form:input path = "targetDate" type = "text" class = "form-control" required="required"/>\
+			<form:errors path = "targetDate" cssClass = "text-warning"/>\
+		</fieldset>\
+   		<button type = "submit" class = "btn btn-success">Add</button>\
+	</form:form>\
+	\
+</div>\
+<%@ include file = "common/footer.jspf"%>\
+\
+list-todos.jsp\
+<%@ include file = "common/header.jspf"%>\
+<%@ include file = "common/navigation.jspf"%>\
+	<div class = "container">\
+		\cf5 \ul \ulc5 <caption>\cf5 \ulnone Your \cf5 \ul \ulc5 Todos\cf5 \ulnone  are</caption>\
+		<table class = "table table-striped">\
+			<thead>\
+				<tr>\
+					<th>Description</th>\
+					<th>Target Date</th>\
+					<th>Is it Done ?</th>\
+					<th></th>\
+					<th></th>\
+				</tr>	\
+			</thead>\
+			<tbody>\
+				\cf5 \ul \ulc5 <c:forEach items="$\{todos\}" var = "todo">\cf5 \ulnone \
+					<tr>\
+						<td>$\{todo.desc\}</td>\
+						<td>\cf5 \ul \ulc5 <fmt:formatDate value="$\{todo.targetDate\}" pattern = "dd/MM/yyyy"/>\cf5 \ulnone </td>\
+						<td>$\{todo.done\}</td>\
+						<td><a type = "button" class = "btn btn-success" href = "/update-todo?id=$\{todo.id\}">Update</a></td>\
+						<td><a type = "button" class = "btn btn-warning" href = "/delete-todo?id=$\{todo.id\}">Delete</a></td>\
+					</tr>\
+				</c:forEach>\
+			</tbody>\
+		</table>\
+		<div>\
+			<a class = "button" href = "add-todo">Add a \cf5 \ul \ulc5 Todo\cf5 \ulnone </a>\
+		</div>\
+		<script src="webjars/jquery/3.5.1/jquery.min.js"></script>\
+	    <script src="webjars/bootstrap/3.4.1/js/bootstrap.min.js"></script>\
+   	</div>\
+<%@ include file = "common/footer.jspf"%>\
+\
+login.jsp\
+<%@ include file = "common/header.jspf"%>\
+<%@ include file = "common/navigation.jspf"%>\
+	<form method = "post">\
+		Name : <input type = "text" name = "name"/>\
+		Password : <input type = "password" name = "password"/><br>\
+		<input type = "submit"/>\
+	</form>\
+	<font color = "red">$\{errorMessage\}</font>\
+<%@ include file = "common/footer.jspf"%>\
+\
+welcome.jsp\
+<%@ include file = "common/header.jspf"%>\
+<%@ include file = "common/navigation.jspf"%>		Welcome !!! $\{name\}<br>\
+	<a href = "/list-todos">Click here</a> to manage your todo's.\
+<%@ include file = "common/footer.jspf"%>\
+\
+}

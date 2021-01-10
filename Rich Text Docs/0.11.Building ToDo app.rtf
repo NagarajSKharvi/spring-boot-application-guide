@@ -1,0 +1,136 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2513
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fnil\fcharset0 Menlo-Regular;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
+{\*\expandedcolortbl;;\cssrgb\c0\c1\c1;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww28600\viewh16580\viewkind0
+\deftab720
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs48 \cf2 Building ToDo app
+\fs22 \expnd0\expndtw0\kerning0
+\
+\
+Note: Keep the Login implementation as it is\
+
+\fs28 welcome.jsp
+\fs22 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \kerning1\expnd0\expndtw0 <html>\
+	<head>\
+		<title>First web application</title>\
+	</head>\
+	\
+	<body>\
+		Welcome !!! $\{name\}\
+		<a href = "/list-todos">Click here</a> to manage your todo's.\
+	</body>\
+</html>\
+\
+A user loggs in and welcome message is shown along with the name of the user. When the user clicks the link it should sent request to list-todos view\
+\
+\pard\pardeftab720\partightenfactor0
+
+\fs28 \cf2 Create HTTP request class
+\fs22 \
+@Controller\
+public class TodoController \{\
+	\
+	@Autowired\
+	private TodoService todoService;\
+	\
+	@RequestMapping(value = "/list-todos", method = RequestMethod.GET)\
+	public String showTodos(ModelMap modelMap) \{\
+		modelMap.put("todos", todoService.listTodo("Nagaraj S Kharvi"));\
+		return "list-todos";\
+	\}\
+\}\
+\
+\
+
+\fs28 Service class
+\fs22 \
+@Service\
+public class TodoService \{\
+	\
+	private static List<Todo> todos = new ArrayList<>();\
+	private static int todoCount = 5;\
+	\
+	static \{\
+		todos.add(new Todo(1, "Nagaraj S Kharvi", "Java New Features", new Date(), false));\
+		todos.add(new Todo(2, "Nagaraj S Kharvi", "Spring Boot", new Date(), false));\
+		todos.add(new Todo(4, "Nagaraj S Kharvi", "Hibernate", new Date(), false));\
+		todos.add(new Todo(4, "Prashanth Kharvi", "Docker", new Date(), false));\
+		todos.add(new Todo(5, "Prashanth Kharvi", "Kubernates", new Date(), false));\
+	\}\
+	\
+	public Todo addTodo(Todo todoResource) \{\
+        int id = ++todoCount;\
+        Todo todo = buildTodo(new Todo(), todoResource, true);\
+        todo.setId(id);\
+        todos.add(todo);\
+        return getTodo(id);\
+    \}\
+	\
+	public Todo updateTodo(Todo todoResource) \{\
+		Todo todo = getTodo(todoResource.getId());\
+		buildTodo(todo, todoResource, false);\
+		return getTodo(todoResource.getId());\
+    \}\
+	\
+	public Todo getTodo(int id) \{\
+        Todo findTodo = null;\
+		for (Todo todo : todos) \{\
+            if (todo.getId() == id) \{\
+                findTodo = todo;\
+            \}\
+        \}\
+        return findTodo;\
+    \}\
+	\
+	public List<Todo> listTodo(String user) \{\
+        List<Todo> filteredTodos = new ArrayList<>();\
+        for (Todo todo : todos) \{\
+            if (todo.getUser().equals(user)) \{\
+                filteredTodos.add(todo);\
+            \}\
+        \}\
+        return filteredTodos;\
+    \}\
+\
+    public boolean deleteTodo(int id) \{\
+    	for (Todo todo : todos) \{\
+            if (todo.getId() == id) \{\
+            	todos.remove(todo);\
+            \}\
+        \}\
+    	return true;\
+    \}\
+    \
+    private Todo buildTodo(Todo todo, Todo todoResource, boolean isNew) \{\
+		if (isNew) \{\
+			todo.setUser(todoResource.getUser());\
+		\}\
+    	todo.setDesc(todoResource.getDesc());\
+		todo.setTargetDate(todoResource.getTargetDate());\
+		todo.setDone(todo.isDone());\
+		return todo;\
+	\}\
+\}\
+\
+
+\fs28 Controller sends the data (Received from service) to list-todos view (list-todos.jsp page)
+\fs22 \
+
+\fs28 list-todos.jsp
+\fs22 \
+<html>\
+	<head>\
+		<title>First web application</title>\
+	</head>\
+	\
+	<body>\
+		Here are the list of your todos:\
+		$\{todos\}\
+	</body>\
+</html>\
+}

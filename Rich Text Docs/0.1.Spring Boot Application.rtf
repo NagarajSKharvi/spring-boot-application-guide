@@ -1,0 +1,183 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2513
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fnil\fcharset0 Menlo-Regular;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;\red0\green0\blue0;\red0\green0\blue0;
+}
+{\*\expandedcolortbl;;\cssrgb\c0\c1\c1;\cssrgb\c0\c1\c1;\cssrgb\c0\c1\c1;
+}
+\paperw11900\paperh16840\margl1440\margr1440\vieww28600\viewh18000\viewkind0
+\deftab720
+\pard\tx566\pardeftab720\partightenfactor0
+
+\f0\fs48 \cf2 \expnd0\expndtw0\kerning0
+Creating Spring Boot Application
+\fs22 \
+\
+
+\fs28 Terminologies -
+\fs22 \
+\cf3 Group Name : Package name of the application\
+\pard\pardeftab720\partightenfactor0
+\cf3 Artifact : Name of the Application\
+Dependencies : \
+We would need to add spring boot starters and dependencies to your application inorder to do something.\
+Ex : \
+Spring boot starter web : Brings us lot of dependencies that are required to develop web applications.\
+DevTools : This dependency helps us to develop web applications in a easy and faster way.\
+\pard\pardeftab720\partightenfactor0
+\cf3 \kerning1\expnd0\expndtw0 spring-boot-starter-parent : Your application becomes the child of Spring boot starter parent (Parent pom providing dependency and plugin management for applications built with Maven) [It inherits lot of stuffs from spring boot starter parent project]\expnd0\expndtw0\kerning0
+\
+Build tool : Maven/Gradle project\cf2 \
+\pard\tx566\pardeftab720\partightenfactor0
+\cf2 \
+
+\fs28 Creating first Spring Boot Application. There are many ways to create Spring Boot Application.
+\fs22 \
+1) Spring Initializr\
+2) Eclipse (Using STS Plugin) or STS (Spring Tool Suite)\
+3) Spring Boot CLI\
+\
+
+\fs28 1) Spring Initializr
+\fs22 \
+\pard\pardeftab720\partightenfactor0
+\cf2 The Spring Initializr is ultimately a web application that can generate a Spring Boot project structure for you.\
+\cf3 Goto Spring initializr website https://start.spring.io/ to create a spring boot microservice Where\
+\pard\tx566\pardeftab720\partightenfactor0
+\cf3 Group ID : com.example.Demo\
+\pard\pardeftab720\partightenfactor0
+\cf3 Artifact Name : 01.Spring-boot-example\
+Select Java version which you are using\
+Click on Generate project and extract the zip file\
+Goto IDE (Integrated development environment) and Import it as Maven project or Gradle project.\
+\
+Once the project is imported it downloads all the required libraries (Or dependencies) from Maven Repository.\
+\pard\pardeftab720\partightenfactor0
+\cf3 \kerning1\expnd0\expndtw0 There are many files and folders in this project like src/main/java (Where java codes are present), src/main/resources (Where property files are present), src/test/java (Where all test files are present)\
+and pom.xml (Maven project) or build.gradle (Gradle project)\cf2 \expnd0\expndtw0\kerning0
+\
+\
+\pard\tx566\pardeftab720\partightenfactor0
+
+\fs28 \cf2 2) Eclipse (Using STS Plugin) or STS (Spring Tool Suite)
+\fs22 \
+File -> New -> Spring Starter Project -> \
+Group Name : Package name of the application\
+\pard\pardeftab720\partightenfactor0
+\cf2 Artifact : Name of the Application\
+\
+\pard\tx566\pardeftab720\partightenfactor0
+
+\fs28 \cf2 3) Spring Boot CLI
+\fs22 \
+\pard\pardeftab720\partightenfactor0
+\cf2 It is a tool which you can download from the official site of Spring Framework. CLI executes groovy files So we can create and use groovy files to create Spring Boot Application\
+\
+\pard\tx566\pardeftab720\partightenfactor0
+\cf2 POM File\cf2 \kerning1\expnd0\expndtw0 \
+\pard\pardeftab720\partightenfactor0
+\cf2 pom.xml\
+\cf3 *************************\cf2 \
+\pard\pardeftab720\partightenfactor0
+
+\fs24 \cf4 <?xml version="1.0" encoding="UTF-8"?>\
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"\
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">\
+	<modelVersion>4.0.0</modelVersion>\
+	<parent>\
+		<groupId>org.springframework.boot</groupId>\
+		<artifactId>spring-boot-starter-parent</artifactId>\
+		<version>2.4.1</version>\
+		<relativePath/> <!-- lookup parent from repository -->\
+	</parent>\
+	<groupId>com.example</groupId>\
+	<artifactId>01.Spring-boot-example</artifactId>\
+	<version>0.0.1-SNAPSHOT</version>\
+	<name>01.Spring-boot-example</name>\
+	<description>Demo project for Spring Boot</description>\
+\
+	<properties>\
+		<java.version>11</java.version>\
+	</properties>\
+\
+	<dependencies>\
+		<dependency>\
+			<groupId>org.springframework.boot</groupId>\
+			<artifactId>spring-boot-starter-web</artifactId>\
+		</dependency>\
+\
+		<dependency>\
+			<groupId>org.springframework.boot</groupId>\
+			<artifactId>spring-boot-devtools</artifactId>\
+			<scope>runtime</scope>\
+			<optional>true</optional>\
+		</dependency>\
+		<dependency>\
+			<groupId>org.projectlombok</groupId>\
+			<artifactId>lombok</artifactId>\
+			<optional>true</optional>\
+		</dependency>\
+		<dependency>\
+			<groupId>org.springframework.boot</groupId>\
+			<artifactId>spring-boot-starter-test</artifactId>\
+			<scope>test</scope>\
+		</dependency>\
+	</dependencies>\
+\
+	<build>\
+		<plugins>\
+			<plugin>\
+				<groupId>org.springframework.boot</groupId>\
+				<artifactId>spring-boot-maven-plugin</artifactId>\
+				<configuration>\
+					<excludes>\
+						<exclude>\
+							<groupId>org.projectlombok</groupId>\
+							<artifactId>lombok</artifactId>\
+						</exclude>\
+					</excludes>\
+				</configuration>\
+			</plugin>\
+		</plugins>\
+	</build>\
+\
+</project>\
+\pard\pardeftab720\partightenfactor0
+
+\fs22 \cf2 *************************\
+
+\fs28 \cf3 Project description and packaging
+\fs22 \
+So here 
+\fs24 groupId and artifactId are the ones which was given while creating spring boot project. Version (SNAPSHOT) means the project in dev mode.\
+Packaging is jar (Java Archive)\
+Typically in a web application we would use packaging called as war (Web Archive). Since it is a Spring boot application we would use packaging as jar because spring boot provides embedded server to achieve our purpose.\
+
+\fs22 \cf2 There are three sections\
+
+\fs24 \cf3 1) Parent - Specifying parent application so that we can inherit some features from it\
+2) Dependencies - All the dependencies located in folder called as Maven Dependencies\
+spring boot starter web - If you want to develop web application or rest application you need this dependency\
+Dev Tools - Brings features which makes developing applications easy\
+Spring boot starter test - Helps to write good unit test and integration test\
+\
+Transitive Dependencies - We need some dependencies like starter web to develop web application, in same way starter web needs some other dependencies that is called as transitive dependency.\
+3) plugin - Spring boot maven plugin helps easily running spring boot applications and helps creating jar and war files out of spring boot web applications.\
+4) properties - Last one is Java Version\
+\
+
+\fs28 @SpringBootApplication annotation
+\fs24 \
+@SpringBootApplication annotation initialises spring (Component Scan) and Spring boot (Auto configuration)\
+SpringApplication is a class that has a static method called run is used to run the spring boot application. It launches the application along with a server.\
+\
+application.properties - Is a configuration file (Where lot of things can be configured)\
+\
+\
+\
+\
+
+\fs22 \cf2 \
+\
+\
+\
+}

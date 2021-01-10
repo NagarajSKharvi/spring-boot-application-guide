@@ -1,0 +1,76 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2513
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fnil\fcharset0 Menlo-Regular;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;\red0\green0\blue0;}
+{\*\expandedcolortbl;;\cssrgb\c0\c1\c1;\cssrgb\c0\c1\c1;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww28600\viewh16580\viewkind0
+\deftab720
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs48 \cf2 Building ToDo app update
+\fs22 \cf2 \
+\
+
+\fs28 \cf2 Doing todo update
+\fs22 \cf2 \
+\
+\pard\pardeftab720\partightenfactor0
+
+\fs28 \cf2 list-todos.jsp
+\fs22 \cf2 \
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>\
+<html>\
+	<head>\
+		<title>Todo's for $\{name\}</title>\
+		<link href="webjars/bootstrap/4.5.3/css/bootstrap.min.css" rel="stylesheet">\
+	</head>\
+	\
+	<body>\
+		<div class = "container">\
+			\cf2 \ul \ulc2 <caption>\cf2 \ulnone Your \cf2 \ul \ulc2 Todos\cf2 \ulnone  are</caption>\
+			<table class = "table table-striped">\
+				<thead>\
+					<tr>\
+						<th>Description</th>\
+						<th>Target Date</th>\
+						<th>Is it Done ?</th>\
+						<th></th>\
+						<th></th>\
+					</tr>	\
+				</thead>\
+				<tbody>\
+					<c:forEach items="$\{todos\}" var = "todo">\
+						<tr>\
+							<td>$\{todo.desc\}</td>\
+							<td>$\{todo.targetDate\}</td>\
+							<td>$\{todo.done\}</td>\
+							<td><a type = "button" class = "btn btn-success" href = "/update-todo?id=$\{todo.id\}">Update</a></td>\
+							<td><a type = "button" class = "btn btn-warning" href = "/delete-todo?id=$\{todo.id\}">Delete</a></td>\
+						</tr>\
+					</c:forEach>\
+				</tbody>\
+			</table>\
+			<div>\
+				<a class = "button" href = "add-todo">Add a \cf2 \ul \ulc2 Todo\cf2 \ulnone </a>\
+			</div>\
+			<script src="webjars/jquery/3.5.1/jquery.min.js"></script>\
+		    <script src="webjars/bootstrap/4.5.3/js/bootstrap.min.js"></script>\
+	   	</div>\
+	</body>\
+</html>\
+\
+Controller methods (One for editing todo, another is for updating todo)\
+\cf3 @RequestMapping(value = "/update-todo", method = RequestMethod.GET)\
+public String showUpdateTodoPage(@RequestParam int id, ModelMap modelMap) \{\
+	Todo todo = todoService.getTodo(id);\
+	modelMap.put("todo", todo);\
+	return "todo";\
+\}\
+	\
+@RequestMapping(value = "/update-todo", method = RequestMethod.POST)\
+public String updateTodo(@Valid Todo todo, BindingResult bindingResult) \{\
+	if (bindingResult.hasErrors()) \{\
+		return "todo";\
+	\}\
+	todoService.updateTodo(todo);\
+	return "redirect:/list-todos";\
+\}}

@@ -1,0 +1,64 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2513
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fnil\fcharset0 Menlo-Regular;\f1\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;\red0\green0\blue0;}
+{\*\expandedcolortbl;;\cssrgb\c0\c1\c1;\cssrgb\c0\c0\c0;}
+{\*\listtable{\list\listtemplateid1\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid1\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid1}}
+{\*\listoverridetable{\listoverride\listid1\listoverridecount0\ls1}}
+\paperw11900\paperh16840\margl1440\margr1440\vieww28600\viewh16580\viewkind0
+\deftab720
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs48 \cf2 HTTP and Servlet
+\fs22 \expnd0\expndtw0\kerning0
+\
+\pard\tx566\pardeftab720\partightenfactor0
+\cf2 \
+\pard\pardeftab720\partightenfactor0
+
+\fs28 \cf3 HTTP (Hyper Text Transfer Protocol)
+\fs22 \
+It is the data communication protocol used to establish communication between client and server. HTTP is TCP/IP based communication protocol, which is used to deliver the data like image files, query results, HTML files etc on the World Wide Web (WWW) with the default port is TCP 80.The Basic Characteristics of HTTP (Hyper Text Transfer Protocol):\
+\pard\tx220\tx720\pardeftab720\li720\fi-720\partightenfactor0
+\ls1\ilvl0\cf3 \kerning1\expnd0\expndtw0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+It is the protocol that allows web servers and browsers to exchange data over the web.\
+\ls1\ilvl0\kerning1\expnd0\expndtw0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+It is a request response protocol.\
+\ls1\ilvl0\kerning1\expnd0\expndtw0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+It uses the reliable TCP connections by default on TCP port 80.\
+\ls1\ilvl0\kerning1\expnd0\expndtw0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+It is stateless means each request is considered as the new request. In other words, server doesn't recognize the user by default.\
+\pard\tx566\pardeftab720\partightenfactor0
+\cf3 \
+\pard\pardeftab720\partightenfactor0
+
+\fs28 \cf3 DispatcherServlet
+\fs22 \
+The DispatcherServlet is an actual Servlet (it inherits from the HttpServlet base class)\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardeftab720\pardirnatural\partightenfactor0
+
+\f1\fs24 \cf0 \kerning1\expnd0\expndtw0 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs48 \cf2 DispatcherServlet and Spring MVC Flow
+\fs22 \expnd0\expndtw0\kerning0
+\
+\pard\tx566\pardeftab720\partightenfactor0
+\cf2 \
+\
+\pard\pardeftab720\partightenfactor0
+\cf2 \kerning1\expnd0\expndtw0 DispatcherServlet is called as Front Controller because any request that comes to web application directly goes to DispatcherServlet.\expnd0\expndtw0\kerning0
+\
+\pard\pardeftab720\partightenfactor0
+
+\fs28 \cf3 \outl0\strokewidth0 \strokec3 \
+Flow of Request
+\fs22 \
+DispatcherServlet receives HTTP Request.\
+DispatcherServlet identifies the right Controller based on the URL.\
+Controller executes Business Logic.\
+Controller returns a) Model b) View Name Back to DispatcherServlet.\
+DispatcherServlet identifies the correct view (ViewResolver).\
+DispatcherServlet makes the model available to view and executes it.\
+DispatcherServlet returns HTTP Response Back.\
+\
+All these things takes place in Servlet Engine}
